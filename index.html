@@ -17,21 +17,26 @@
             <header>
                 <h1>Coding Quiz Challenge</h1>   
             </header>
-            <section id="start">
-                <section id="parent"> 
-                    <section id= "child">
-                        <p>Try to answer the following code-reletated questions within the time limit</p>
-                        <p>Keep in mind that incorrect answers will penalise your score / time by ten seconds</p>
-                        <p id="btn1"> Start</p>
+            <section id="container">  
+                <section id="start">
+                    <section id="parent"> 
+                        <section id= "child">
+                            <p>Try to answer the following code-reletated questions within the time limit</p>
+                            <p>Keep in mind that incorrect answers will penalise your score / time by ten seconds</p>
+                            <p id="btn1"> Start Quiz</p>
+                        </section>
                     </section>
                 </section>
-            </section>
-            
-            <section>
+            </section>   
 
-
-
-
+            <section id="code-quiz" class = "hide">
+                <section id="question"> </section>
+                <ul id = "options"> 
+                    <li class="option" id="1" onclick = "checkAnswer('1')"></li>
+                    <li class="option" id="2" onclick = "checkAnswer('2')"></li>
+                    <li class="option" id="3" onclick = "checkAnswer('3')"></li>
+                    <li class="option" id="4" onclick = "checkAnswer('4')"></li>
+                </ul>
 
 
 

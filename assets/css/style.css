@@ -1,3 +1,6 @@
+/* ========================================================================
+  Variables
+ ========================================================================== */
 :root{
     --dark-primary-color : #303F9F; /* background */
    --default-primary-color : #3F51B5; /* background */
@@ -9,6 +12,9 @@
    --divider-color : #BDBDBD; /* border */
 }
 
+/* ========================================================================
+   Universal selector
+ ========================================================================== */
 * {
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; 
     text-decoration:none;
@@ -17,7 +23,8 @@
     padding:0px; 
     outline:none;
 }
-/* Element selectors
+/* ========================================================================
+   Element selectors
  ========================================================================== */  
 html {
     /* set 1rem to 10px instead of native 16px to make it easier to calculate font-size values for the rest of the page (e.g. 1.6rem is 16px, 2.0rem is 20px, etc.) */
@@ -53,8 +60,7 @@ h2 {
 }
   
 p{
-    font-size: 2rem; 
-    width: 100%;
+    font-size: 2rem;     
     text-align: center; 
     font-weight: bold;
 }
@@ -80,26 +86,26 @@ footer {
     text-align: center;     
   }
 
+/* ========================================================================
+   Component: Class and Id selectors
+ ========================================================================== */
+
+
 #btn1{
     font-size: 2.5rem;
-    font-weight: bolder;    
-    width:100%;
+    font-weight: bolder;       
     height:50px;
-    border : 2px solid var(--light-primary-color);
-    text-align: center;
-    position:relative;
+    border-radius: 200px;
+    border : 2px solid var(--light-primary-color);    
     cursor: pointer;   
     color: var(--secondary-text-color); 
     background-color: var(--divider-color);
-    /* display: table-cell; */
-    /* vertical-align: middle
-    margin: 0px auto 0px auto */
 }
+
 #btn1:hover{
     border: 3px solid var(--dark-primary-color);
     color : var(--primary-text-color);
 }
-
 
 #parent {
     display: table;
@@ -111,3 +117,14 @@ footer {
   display: table-cell;
   vertical-align: middle;
  }
+
+ #container{
+    margin : 20px auto;
+    color: var(--secondary-text-color); 
+    background-color: var(--primary-text-color);
+    height: 500px;
+    width : 900px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 15px 5px;
+    position: relative;
+}
