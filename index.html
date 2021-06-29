@@ -13,21 +13,20 @@
     </head>
 
     <body>
-        <section>
-            <header>
-                <h1>Coding Quiz Challenge</h1>   
-            </header>
-            <section id="container">  
-                <section id="start">
-                    <section id="parent"> 
-                        <section id= "child">
-                            <p>Try to answer the following code-reletated questions within the time limit</p>
-                            <p>Keep in mind that incorrect answers will penalise your score / time by ten seconds</p>
-                            <p id="btn1"> Start Quiz</p>
-                        </section>
+        
+        <header>
+            <h1>Coding Quiz Challenge</h1>   
+        </header>
+        <section id="container">  
+            <section id="start">
+                <section id="parent"> 
+                    <section id= "child">
+                        <p>Try to answer the following code-reletated questions within the time limit</p>
+                        <p>Keep in mind that incorrect answers will penalise your score / time by ten seconds</p>
+                        <p id="btn1"> Start Quiz</p>
                     </section>
                 </section>
-            </section>   
+            </section>             
 
             <section id="code-quiz" class = "hide">
                 <section id="question"> </section>
@@ -36,15 +35,13 @@
                     <li class="option" id="2" onclick = "checkAnswer('2')"></li>
                     <li class="option" id="3" onclick = "checkAnswer('3')"></li>
                     <li class="option" id="4" onclick = "checkAnswer('4')"></li>
-                </ul>
-
-
-
-
+                </ul>            
+                <section id="timer">
+                    <section id="answers"></section>
+                </section>    
+                <section id="score" class = "hide"></section>
             </section>
-            <section id="score" class="hide"></section>
         </section>
-
 
         <footer>
             <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

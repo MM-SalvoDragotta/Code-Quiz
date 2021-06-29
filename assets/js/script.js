@@ -1,6 +1,12 @@
 // select elements
 var start = document.getElementById("start");
-var codeQuiz= document.getElementById("code-Quiz");
+var codeQuiz= document.getElementById("code-quiz");
+var question = document.getElementById("question");
+
+var option1 = document.getElementById("1");
+var option2 = document.getElementById("2");
+var option3 = document.getElementById("3");
+var option4 = document.getElementById("4");
 
 // Questions
 
@@ -52,12 +58,36 @@ var questions = [
 ];
 
 // Variables
+var currentQuestion = 0;;
+var lastQuestion = questions.length-1;
+var time;
+var score;
 
 //Functions
-function startQuiz(){
-    start.style.display = "none";
+function diplayQuestion() {    
+    var quizQuestion = questions[currentQuestion];
+    question.innerHTML = "<p>"+ quizQuestion.question + "</p>";
+    option1.innerHTML = quizQuestion.option1;
+    option2.innerHTML = quizQuestion.option2;
+    option3.innerHTML = quizQuestion.option3;
+    option4.innerHTML = quizQuestion.option4;
+    // time = setInterval(renderCounter,1000);
+
 }
 
-//Events
+function startQuiz(){
+    start.style.display = "none";
+    codeQuiz.style.display = "inline-block" ;
+    diplayQuestion();
+}
 
+function checkAnswer(answer){
+    // count = 0;
+    if(currentQuestion < lastQuestion){
+        currentQuestion++;
+        diplayQuestion(); 
+
+}};
+
+//Events
 btn1.addEventListener("click",startQuiz);
