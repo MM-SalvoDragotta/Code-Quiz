@@ -8,6 +8,8 @@ var option2 = document.getElementById("2");
 var option3 = document.getElementById("3");
 var option4 = document.getElementById("4");
 
+var answers = document.getElementById("answers");
+var timerEl = document.getElementById('time');
 // Questions
 
 var questions = [
@@ -63,6 +65,31 @@ var lastQuestion = questions.length-1;
 var time;
 var score;
 
+
+function countdown() {
+    var timeLeft = 25;  
+    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+    var timeInterval = setInterval(function () {
+      // As long as the `timeLeft` is greater than 1
+      if (timeLeft > 1) {
+        // Set the `textContent` of `timerEl` to show the remaining seconds
+        timerEl.textContent = timeLeft + ' seconds remaining';
+        // Decrement `timeLeft` by 1
+        timeLeft--;
+      } else if (timeLeft === 1) {
+        // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
+        timerEl.textContent = timeLeft + ' second remaining';
+        timeLeft--;
+      } else {
+        // Once `timeLeft` gets to 0, set `timerEl` to an empty string        
+        // Use `clearInterval()` to stop the timer
+        clearInterval(timeInterval);
+        timerEl.textContent = '0 second remaining';
+        // Call the `displayMessage()` function        
+      }
+    }, 1000);
+  }
+
 //Functions
 function diplayQuestion() {    
     var quizQuestion = questions[currentQuestion];
@@ -79,15 +106,27 @@ function startQuiz(){
     start.style.display = "none";
     codeQuiz.style.display = "inline-block" ;
     diplayQuestion();
+    countdown();
+    renderProgress();
+
 }
 
 function checkAnswer(answer){
     // count = 0;
     if(currentQuestion < lastQuestion){
         currentQuestion++;
-        diplayQuestion(); 
+        diplayQuestion();
+        
+
 
 }};
+
+function renderProgress(){
+    for(let i = 0; i <= lastQuestion; i++){
+        answers.innerHTML += "<div class='answer' id="+ i +"></div>";
+    }
+};
+
 
 //Events
 btn1.addEventListener("click",startQuiz);
