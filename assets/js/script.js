@@ -3,16 +3,16 @@ var start = document.getElementById("start");
 var codeQuiz= document.getElementById("code-quiz");
 var question = document.getElementById("question");
 
-var option1 = document.getElementById("1");
-var option2 = document.getElementById("2");
-var option3 = document.getElementById("3");
-var option4 = document.getElementById("4");
+var option1 = document.getElementById("first");
+var option2 = document.getElementById("second");
+var option3 = document.getElementById("third");
+var option4 = document.getElementById("fourth");
 
 var answers = document.getElementById("answers");
 var timerEl = document.getElementById('time');
-// Questions
+// quizQuestions
 
-var questions = [
+var quizQuestions = [
     {
         question : "Commonly used data types DO NOT include:",
         option1 : "strings",
@@ -61,7 +61,7 @@ var questions = [
 
 // Variables
 var currentQuestion = 0;;
-var lastQuestion = questions.length-1;
+var lastQuestion = quizQuestions.length-1;
 var timeLeft = 25;
 var score;
 
@@ -92,7 +92,7 @@ function countdown() {
 
 //Functions
 function diplayQuestion() {    
-    var quizQuestion = questions[currentQuestion];
+    var quizQuestion = quizQuestions[currentQuestion];
     question.innerHTML = "<p>"+ quizQuestion.question + "</p>";
     option1.innerHTML = quizQuestion.option1;
     option2.innerHTML = quizQuestion.option2;
@@ -112,12 +112,17 @@ function CodeQuiz(){
 }
 
 function checkAnswer(answer){
-    // count = 0;
+    if (answer == quizQuestions[currentQuestion].correctAnswer){
+        score++;
+        document.getElementById(currentQuestion).style.backgroundColor = "green";
+    }
+    else{
+        document.getElementById(currentQuestion).style.backgroundColor = "red";
+    }
     if(currentQuestion < lastQuestion){
         currentQuestion++;
         diplayQuestion();
         
-
 
 }};
 
