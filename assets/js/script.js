@@ -39,7 +39,7 @@ var quizQuestions = [
         option1 : "numbers and strings",
         option2 : "other arrays",
         option3 : "booleans",
-        option4 : "all of the above",
+        option4 : "all of the previous answers",
         correctAnswer : "fourth",
     },
 
@@ -65,7 +65,8 @@ var quizQuestions = [
 // Variables
 var currentQuestion = 0;;
 var lastQuestion = quizQuestions.length-1;
-var timeLeft = quizQuestions.length * 10;
+// var timeLeft = quizQuestions.length * 10;
+var timeLeft = 15;
 var score = 0;
 
 
@@ -93,6 +94,19 @@ var score = 0;
 //     }, 1000);
 //   }
 
+//https://stackoverflow.com/questions/46942255/javascript-how-do-i-wait-x-seconds-before-running-next-line-of-code
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+async function waitsec() {
+    // console.log('Taking a break...');
+    await sleep(5000);
+    diplayScore()
+    // console.log('Two second later');
+}
+
   function countdown() {
     // var timeLeft = 25;  
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
@@ -103,12 +117,14 @@ var score = 0;
         timerEl.textContent = "TIME : " + timeLeft;
         // Decrement `timeLeft` by 1
         timeLeft--;
+        
       } else {
         // Once `timeLeft` gets to 0, set `timerEl` to an empty string        
         // Use `clearInterval()` to stop the timer
         clearInterval(timeInterval);
-        timerEl.textContent = "TIME is up! ";
-
+        // timerEl.textContent = "TIME is up! ";
+        timerEl.textContent = "All done! And your score is .... ";
+        waitsec();
       }
     }, 1000);
   }
@@ -162,7 +178,7 @@ function checkAnswer(answer){
         // console.log("ELSE condition met!");
         document.getElementById(currentQuestion).style.backgroundColor = "red";
         timeLeft-=10;
-        timerEl.textContent = "TIME : " + timeLeft
+        timerEl.textContent = "TIME : " + timeLeft;
 
     }
     if(currentQuestion < lastQuestion){
@@ -170,8 +186,8 @@ function checkAnswer(answer){
         diplayQuestion(); 
     }
     else{
-        timeLeft = 0
-        diplayScore()
+        timeLeft = 0;
+        waitsec();
     }       
 
 };
@@ -181,10 +197,14 @@ function checkAnswer(answer){
 function diplayScore() {
     codeQuiz.style.display = "none"
     scoreEl.style.display = "inline-block"
+    var message = `Your score for the test is ${(score / quizQuestions.length) * 100}%`;
+    console.log (message);
+    scoreEl.innerHTML = `<p>${message}</p>`;
+    
 }
 
 function renderBoxes(){
-    for(let i = 0; i <= lastQuestion; i++){
+    for(var i = 0; i <= lastQuestion; i++){
         answers.innerHTML += "<div class='answer' id="+ i +"></div>";
     }
 };
