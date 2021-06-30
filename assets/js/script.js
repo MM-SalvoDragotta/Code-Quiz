@@ -176,6 +176,8 @@ function checkAnswer(answer){
 
 };
 
+//comment!
+
 function diplayScore() {
     codeQuiz.style.display = "none"
     scoreEl.style.display = "inline-block"
