@@ -62,12 +62,12 @@ var questions = [
 // Variables
 var currentQuestion = 0;;
 var lastQuestion = questions.length-1;
-var time;
+var timeLeft = 25;
 var score;
 
 
 function countdown() {
-    var timeLeft = 25;  
+    // var timeLeft = 25;  
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
       // As long as the `timeLeft` is greater than 1
@@ -102,12 +102,12 @@ function diplayQuestion() {
 
 }
 
-function startQuiz(){
+function CodeQuiz(){
     start.style.display = "none";
     codeQuiz.style.display = "inline-block" ;
-    diplayQuestion();
     countdown();
-    renderProgress();
+    diplayQuestion();    
+    renderBoxes();
 
 }
 
@@ -121,7 +121,7 @@ function checkAnswer(answer){
 
 }};
 
-function renderProgress(){
+function renderBoxes(){
     for(let i = 0; i <= lastQuestion; i++){
         answers.innerHTML += "<div class='answer' id="+ i +"></div>";
     }
@@ -129,4 +129,4 @@ function renderProgress(){
 
 
 //Events
-btn1.addEventListener("click",startQuiz);
+btn1.addEventListener("click",CodeQuiz);
