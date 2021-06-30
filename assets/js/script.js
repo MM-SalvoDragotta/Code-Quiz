@@ -10,8 +10,11 @@ var option4 = document.getElementById("fourth");
 
 var answers = document.getElementById("answers");
 var timerEl = document.getElementById('time');
-// quizQuestions
 
+var scoreEl = document.getElementById('score');
+
+
+// quizQuestions
 var quizQuestions = [
     {
         question : "Commonly used data types DO NOT include:",
@@ -19,7 +22,7 @@ var quizQuestions = [
         option2 : "booleans",
         option3 : "alerts",
         option4 : "numbers",
-        correctAnswer : "3",
+        correctAnswer : "third",
     },
 
     {
@@ -28,7 +31,7 @@ var quizQuestions = [
         option2 : "curly brackets",
         option3 : "parentheses",
         option4 : "square brackets",
-        correctAnswer : "3",
+        correctAnswer : "third",
     },
 
     {
@@ -37,7 +40,7 @@ var quizQuestions = [
         option2 : "other arrays",
         option3 : "booleans",
         option4 : "all of the above",
-        correctAnswer : "4",
+        correctAnswer : "fourth",
     },
 
     {
@@ -46,46 +49,66 @@ var quizQuestions = [
         option2 : "curly brackets",
         option3 : "quotes",
         option4 : "parentheses",
-        correctAnswer : "3",
+        correctAnswer : "third",
     },
 
     {
-        question : "A very useful tool used during development and debugging fro printing content to the debugger is",
+        question : "A very useful tool used during development and debugging for printing content to the debugger is",
         option1 : "JavaScript",
         option2 : "terminal / bash",
         option3 : "for loops",
         option4 : "console log",
-        correctAnswer : "4",
+        correctAnswer : "fourth",
     }
 ];
 
 // Variables
 var currentQuestion = 0;;
 var lastQuestion = quizQuestions.length-1;
-var timeLeft = 25;
-var score;
+var timeLeft = quizQuestions.length * 10;
+var score = 0;
 
 
-function countdown() {
+// function countdown() {
+//     // var timeLeft = 25;  
+//     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+//     var timeInterval = setInterval(function () {
+//       // As long as the `timeLeft` is greater than 1
+//       if (timeLeft > 1) {
+//         // Set the `textContent` of `timerEl` to show the remaining seconds
+//         timerEl.textContent = timeLeft + ' seconds remaining';
+//         // Decrement `timeLeft` by 1
+//         timeLeft--;
+//       } else if (timeLeft === 1) {
+//         // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
+//         timerEl.textContent = timeLeft + ' second remaining';
+//         timeLeft--;
+//       } else {
+//         // Once `timeLeft` gets to 0, set `timerEl` to an empty string        
+//         // Use `clearInterval()` to stop the timer
+//         clearInterval(timeInterval);
+//         timerEl.textContent = '0 second remaining';
+//         // Call the `displayMessage()` function        
+//       }
+//     }, 1000);
+//   }
+
+  function countdown() {
     // var timeLeft = 25;  
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
       // As long as the `timeLeft` is greater than 1
-      if (timeLeft > 1) {
+      if (timeLeft >= 1) {
         // Set the `textContent` of `timerEl` to show the remaining seconds
-        timerEl.textContent = timeLeft + ' seconds remaining';
+        timerEl.textContent = "TIME : " + timeLeft;
         // Decrement `timeLeft` by 1
-        timeLeft--;
-      } else if (timeLeft === 1) {
-        // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
-        timerEl.textContent = timeLeft + ' second remaining';
         timeLeft--;
       } else {
         // Once `timeLeft` gets to 0, set `timerEl` to an empty string        
         // Use `clearInterval()` to stop the timer
         clearInterval(timeInterval);
-        timerEl.textContent = '0 second remaining';
-        // Call the `displayMessage()` function        
+        timerEl.textContent = "TIME is up! ";
+
       }
     }, 1000);
   }
@@ -98,8 +121,6 @@ function diplayQuestion() {
     option2.innerHTML = quizQuestion.option2;
     option3.innerHTML = quizQuestion.option3;
     option4.innerHTML = quizQuestion.option4;
-    // time = setInterval(renderCounter,1000);
-
 }
 
 function CodeQuiz(){
@@ -108,23 +129,57 @@ function CodeQuiz(){
     countdown();
     diplayQuestion();    
     renderBoxes();
-
 }
+
+// function checkAnswer(answer){
+//     console.log({
+//         currentIf: answer == quizQuestions[currentQuestion].correctAnswer,
+//         currentQuestion:  quizQuestions[currentQuestion].correctAnswer,
+//     })
+  
+//     if (answer == quizQuestions[currentQuestion].correctAnswer){
+//         score++;
+//         document.getElementById(currentQuestion).style.backgroundColor = "green";
+//     }
+//     else{
+//         document.getElementById(currentQuestion).style.backgroundColor = "red";
+//     }
+//     if(currentQuestion < lastQuestion){
+//         currentQuestion++;
+//         diplayQuestion();
+       
+
+// }};
 
 function checkAnswer(answer){
     if (answer == quizQuestions[currentQuestion].correctAnswer){
+        // console.log("IF condition met!");
         score++;
+        console.log(score);
         document.getElementById(currentQuestion).style.backgroundColor = "green";
     }
     else{
+        // console.log("ELSE condition met!");
         document.getElementById(currentQuestion).style.backgroundColor = "red";
+        timeLeft-=10;
+        timerEl.textContent = "TIME : " + timeLeft
+
     }
     if(currentQuestion < lastQuestion){
         currentQuestion++;
-        diplayQuestion();
-        
+        diplayQuestion(); 
+    }
+    else{
+        timeLeft = 0
+        diplayScore()
+    }       
 
-}};
+};
+
+function diplayScore() {
+    codeQuiz.style.display = "none"
+    scoreEl.style.display = "inline-block"
+}
 
 function renderBoxes(){
     for(let i = 0; i <= lastQuestion; i++){
