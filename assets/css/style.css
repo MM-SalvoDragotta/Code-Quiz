@@ -179,15 +179,21 @@ footer {
     width : 25px;
     height : 25px;    
     background-color:white;
-      
+    bottom : 200px;      
 }
-
 
 #time{
     position: absolute;
     height : 100px;
     width : 250px;
-    bottom : 200px;
-    text-align: center;
-    float :left; 
+    bottom : 230px;
+    text-align: center;    
 }
+
+#answers{    
+    display: inline-block;    
+    margin-left : 20px;
+    margin-right : 5px;
+    width : 300px;    
+    bottom : 200px  !important   ; 
+} 
