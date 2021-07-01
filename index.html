@@ -5,11 +5,16 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+
         <link rel="shortcut icon" href="./assets/images/choose.ico "/>
         <link rel="apple-touch-icon" href="./assets/images/choose.png"/>
         <title>Code Quiz</title>
         <link rel="stylesheet" href="./assets/css/jass.css" />
-        <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="stylesheet" href="./assets/css/style.css?ver=1.0" />
     </head>
 
     <body>
@@ -24,6 +29,8 @@
                         <p>Try to answer the following code-reletated questions within the time limit</p>
                         <p>Keep in mind that incorrect answers will penalise your score / time by 10 seconds</p>
                         <p id="btn1"> Start Quiz</p>
+                        <p id="btn2"> Check The Scores</p>
+
                     </section>
                 </section>
             </section>             
@@ -38,16 +45,25 @@
                 </ul>            
                 <section id="time"></section>
                 <section id="answers"></section>  
-            </section>  
-            <section id="score" class="hide"></section>
-            <section  id="show-form" class="hide">
-                <form id="todo-form" method="POST">
-                    <label for="todo-text">Add your Name: </label>
-                    <input type="text" name="todo-text" id="todo-text" />
-                </form>
-                <p>Scores: <span id="todo-count">0</span></p>
-                <ul id="todo-list"></ul>
             </section>
+            <section id="score-wrapper"> 
+                <section id="score" class="hide"></section>                
+            </section>
+            <section id="score-wrapper"> 
+                <button onClick="window.location.reload();" id="refresh" class="hide" >ReStart</button>
+            </section>   
+
+            <section id="score-wrapper"> 
+                <section  id="show-form" class="hide">
+                    <form id="score-form" method="POST" onsubmit="scoretext.disabled = true; return true;" >
+                        <label for="scoretext">Add your Name: </label>
+                        <input type="text" name="scoretext" id="scoretext" />
+                    </form>
+                    <p>Scores: <span id="score-count">0</span></p>
+                    <ul id="score-list"></ul>
+                </section>
+            </section>
+
         </section>
 
         <footer>
@@ -55,7 +71,7 @@
         </footer>
         <!-- Added link to the jQuery library -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script type="text/javascript" src="./assets/js/script.js"></script>    
+        <script type="text/javascript" src="./assets/js/script.js?ver=1.1"></script>    
     </body>
 
 </html>

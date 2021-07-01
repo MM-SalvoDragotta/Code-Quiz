@@ -1,4 +1,8 @@
 // select elements
+
+var mainContainer = document.querySelector("#container");
+var refresh = document.querySelector("#refresh");
+
 var start = document.getElementById("start");
 var codeQuiz= document.getElementById("code-quiz");
 var question = document.getElementById("question");
@@ -15,10 +19,10 @@ var scoreEl = document.getElementById('score');
 
 var nameEl = document.getElementById('show-form');
 
-var todoInput = document.querySelector("#todo-text");
-var todoForm = document.querySelector("#todo-form");
-var todoList = document.querySelector("#todo-list");
-var todoCountSpan = document.querySelector("#todo-count");
+var scoreInput = document.querySelector("#scoretext");
+var scoreForm = document.querySelector("#score-form");
+var scoreList = document.querySelector("#score-list");
+var scoreCountSpan = document.querySelector("#score-count");
 
 
 
@@ -76,7 +80,8 @@ var lastQuestion = quizQuestions.length-1;
 // var timeLeft = quizQuestions.length * 10;
 var timeLeft = 2;
 var score = 0;
-var todos = [];
+var theScores = [];
+var scorePercentage = 0;
 
 // function countdown() {
 //     // var timeLeft = 25;  
@@ -108,57 +113,58 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
   
-async function waitsec() {
-    // console.log('Taking a break...');
-    await sleep(5000);
-    diplayScore()
-    // console.log('Two second later');
+async function waitsec() {    
+    await sleep(3000);
+    myScore();
+    diplayScore();    
 }
 
-function renderTodos() {
-    // Clear todoList element and update todoCountSpan
-    todoList.innerHTML = "";
-    todoCountSpan.textContent = todos.length;
+function renderScores() {
+    // Clear scoreList element and update scoreCountSpan
+    scoreList.innerHTML = "";
+    scoreCountSpan.textContent = theScores.length;
   
     // Render a new li for each todo
-    for (var i = 0; i < todos.length; i++) {
-      var todo = todos[i];
+    for (var i = 0; i < theScores.length; i++) {
+      var score = theScores[i];
   
       var li = document.createElement("li");
-      li.textContent = todo;
+      li.textContent = score;
       li.setAttribute("data-index", i);
+      li.className = "score-li";
   
       var button = document.createElement("button");
-      button.textContent = "Added ✔️";
+      button.textContent = "Click to Remove ✔️";
+      button.className = "score-button";
   
       li.appendChild(button);
-      todoList.appendChild(li);
+      scoreList.appendChild(li);
     }
 }
 
-  function storeTodos() {
-    // Stringify and set key in localStorage to todos array
-    localStorage.setItem("todos", JSON.stringify(todos));
+  function storeScores() {
+    // Stringify and set key in localStorage to theScores array
+    localStorage.setItem("theScores", JSON.stringify(theScores));
 }
   
 // Add submit event to form
-todoForm.addEventListener("submit", function(event) {
+scoreForm.addEventListener("submit", function(event) {
     event.preventDefault();
   
-    var todoText = todoInput.value.trim();
+    var scoreText = scoreInput.value.trim();
   
     // Return from function early if submitted todoText is blank
-    if (todoText === "") {
+    if (scoreText === "") {
       return;
     }
   
-    // Add new todoText to todos array, clear the input
-    todos.push(todoText);
-    todoInput.value = "";
-  
-    // Store updated todos in localStorage, re-render the list
-    storeTodos();
-    renderTodos();
+    // Add new todoText to theScores array, clear the input
+    var storedScore = `${scoreText} scored ${scorePercentage}%`;
+    theScores.push(storedScore);
+    scoreInput.value = ""; 
+    // Store updated theScores in localStorage, re-render the list
+    storeScores();
+    renderScores();
 });
 
 function countdown() {
@@ -241,46 +247,69 @@ function checkAnswer(answer){
     }
     else{
         timeLeft = 0;
+        timerEl.textContent = "TIME : " + timeLeft;
         waitsec();
     }       
 
 };
 
+function myScore(){
+  scoreEl.style.display = "inline-block";
+}
+
 function diplayScore() {
     codeQuiz.style.display = "none";
-    nameEl.style.display = "inline-block";
-    scoreEl.style.display = "inline-block";
-    var message = `Your score for the test is ${(score / quizQuestions.length) * 100}%`;
-    console.log (message);
+    nameEl.style.display = "inline-block";    
+    refresh.style.display = "inline-block";
+    mainContainer.style.backgroundColor = 'white';
+    mainContainer.style.boxShadow = 'none';
+    scorePercentage = (score / quizQuestions.length) * 100;
+    var message = `Your score for the test is ${scorePercentage}%`;
+    // console.log (message);
     scoreEl.innerHTML = `<p>${message}</p>`;
-    var storedTodos = JSON.parse(localStorage.getItem("todos"));
-    // If todos were retrieved from localStorage, update the todos array to it
-    if (storedTodos !== null) {
-      todos = storedTodos;
+
+    var storedScores = JSON.parse(localStorage.getItem("theScores"));
+    // If theScores were retrieved from localStorage, update the theScores array to it
+    if (storedScores !== null) {
+      theScores = storedScores;
     }
   
-    // This is a helper function that will render todos to the DOM
-    renderTodos();
+    // This is a helper function that will render Scores to the DOM
+    renderScores();
 
-    todoList.addEventListener("click", function(event) {
+    scoreList.addEventListener("click", function(event) {
         var element = event.target;
       
         // Checks if element is a button
         if (element.matches("button") === true) {
           // Get its data-index value and remove the todo element from the list
           var index = element.parentElement.getAttribute("data-index");
-          todos.splice(index, 1);
+          theScores.splice(index, 1);
       
-          // Store updated todos in localStorage, re-render the list
-          storeTodos();
-          renderTodos();
+          // Store updated theScores in localStorage, re-render the list
+          storeScores();
+          renderScores();
         }
-      });
-
-
-    
-    
+      }); 
 };
+
+function diplayScoreBeginning() {   
+    codeQuiz.style.display = "none";
+    nameEl.style.display = "none";    
+    refresh.style.display = "inline-block";
+    start.style.display = "none";    
+    mainContainer.style.backgroundColor = 'white';
+    mainContainer.style.boxShadow = 'none';
+    renderScores(); 
+    var storedScores = JSON.parse(localStorage.getItem("theScores"));
+    // If theScores were retrieved from localStorage, update the theScores array to it
+    if (storedScores !== null) {
+      theScores = storedScores;
+    }    
+    renderScores();    
+    }
+
+
 
 function renderBoxes(){
     for(var i = 0; i <= lastQuestion; i++){
@@ -289,4 +318,7 @@ function renderBoxes(){
 };
 
 //Events
-btn1.addEventListener("click",CodeQuiz);
+btn1.addEventListener("click", CodeQuiz);
+btn2.addEventListener("click", diplayScoreBeginning);
+
+
