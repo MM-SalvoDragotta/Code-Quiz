@@ -24,6 +24,7 @@ var scoreForm = document.querySelector("#score-form");
 var scoreList = document.querySelector("#score-list");
 var scoreCountSpan = document.querySelector("#score-count");
 
+var formEl = document.querySelector("#score-form");
 
 
 // quizQuestions
@@ -77,8 +78,8 @@ var quizQuestions = [
 // Variables
 var currentQuestion = 0;;
 var lastQuestion = quizQuestions.length-1;
-// var timeLeft = quizQuestions.length * 10;
-var timeLeft = 2;
+var timeLeft = quizQuestions.length * 10;
+// var timeLeft = 2;
 var score = 0;
 var theScores = [];
 var scorePercentage = 0;
@@ -147,25 +148,6 @@ function renderScores() {
     localStorage.setItem("theScores", JSON.stringify(theScores));
 }
   
-// Add submit event to form
-scoreForm.addEventListener("submit", function(event) {
-    event.preventDefault();
-  
-    var scoreText = scoreInput.value.trim();
-  
-    // Return from function early if submitted todoText is blank
-    if (scoreText === "") {
-      return;
-    }
-  
-    // Add new todoText to theScores array, clear the input
-    var storedScore = `${scoreText} scored ${scorePercentage}%`;
-    theScores.push(storedScore);
-    scoreInput.value = ""; 
-    // Store updated theScores in localStorage, re-render the list
-    storeScores();
-    renderScores();
-});
 
 function countdown() {
     // var timeLeft = 25;  
@@ -251,10 +233,36 @@ function checkAnswer(answer){
         waitsec();
     }       
 
-};
+}
 
 function myScore(){
   scoreEl.style.display = "inline-block";
+}
+
+function scoreListRender(){
+  var storedScores = JSON.parse(localStorage.getItem("theScores"));
+  // If theScores were retrieved from localStorage, update the theScores array to it
+  if (storedScores !== null) {
+    theScores = storedScores;
+  }
+
+  // This is a helper function that will render Scores to the DOM
+  renderScores();
+
+  scoreList.addEventListener("click", function(event) {
+      var element = event.target;
+    
+      // Checks if element is a button
+      if (element.matches("button") === true) {
+        // Get its data-index value and remove the todo element from the list
+        var index = element.parentElement.getAttribute("data-index");
+        theScores.splice(index, 1);
+    
+        // Store updated theScores in localStorage, re-render the list
+        storeScores();
+        renderScores();
+      }
+    });
 }
 
 function diplayScore() {
@@ -267,58 +275,46 @@ function diplayScore() {
     var message = `Your score for the test is ${scorePercentage}%`;
     // console.log (message);
     scoreEl.innerHTML = `<p>${message}</p>`;
-
-    var storedScores = JSON.parse(localStorage.getItem("theScores"));
-    // If theScores were retrieved from localStorage, update the theScores array to it
-    if (storedScores !== null) {
-      theScores = storedScores;
-    }
-  
-    // This is a helper function that will render Scores to the DOM
-    renderScores();
-
-    scoreList.addEventListener("click", function(event) {
-        var element = event.target;
-      
-        // Checks if element is a button
-        if (element.matches("button") === true) {
-          // Get its data-index value and remove the todo element from the list
-          var index = element.parentElement.getAttribute("data-index");
-          theScores.splice(index, 1);
-      
-          // Store updated theScores in localStorage, re-render the list
-          storeScores();
-          renderScores();
-        }
-      }); 
-};
+    scoreListRender();
+}
 
 function diplayScoreBeginning() {   
     codeQuiz.style.display = "none";
-    nameEl.style.display = "none";    
-    refresh.style.display = "inline-block";
     start.style.display = "none";    
+    scoreList.style.display = "inline-block";    
+    refresh.style.display = "inline-block";
     mainContainer.style.backgroundColor = 'white';
-    mainContainer.style.boxShadow = 'none';
-    renderScores(); 
-    var storedScores = JSON.parse(localStorage.getItem("theScores"));
-    // If theScores were retrieved from localStorage, update the theScores array to it
-    if (storedScores !== null) {
-      theScores = storedScores;
-    }    
-    renderScores();    
-    }
-
-
+    mainContainer.style.boxShadow = 'none';  
+    scoreListRender();
+}
+    
 
 function renderBoxes(){
     for(var i = 0; i <= lastQuestion; i++){
         answers.innerHTML += "<div class='answer' id="+ i +"></div>";
     }
-};
+}
 
 //Events
 btn1.addEventListener("click", CodeQuiz);
 btn2.addEventListener("click", diplayScoreBeginning);
 
+// Add submit event to form
+scoreForm.addEventListener("submit", function(event) {
+  event.preventDefault();
 
+  var scoreText = scoreInput.value.trim();
+
+  // Return from function early if submitted todoText is blank
+  if (scoreText === "") {
+    return;
+  }
+
+  // Add new todoText to theScores array, clear the input
+  var storedScore = `${scoreText} scored ${scorePercentage}%`;
+  theScores.push(storedScore);
+  scoreInput.value = ""; 
+  // Store updated theScores in localStorage, re-render the list
+  storeScores();
+  renderScores();
+});
