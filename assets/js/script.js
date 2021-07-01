@@ -78,7 +78,6 @@ var timeLeft = 2;
 var score = 0;
 var todos = [];
 
-
 // function countdown() {
 //     // var timeLeft = 25;  
 //     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
@@ -107,7 +106,7 @@ var todos = [];
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
   
 async function waitsec() {
     // console.log('Taking a break...');
@@ -115,7 +114,6 @@ async function waitsec() {
     diplayScore()
     // console.log('Two second later');
 }
-
 
 function renderTodos() {
     // Clear todoList element and update todoCountSpan
@@ -136,15 +134,15 @@ function renderTodos() {
       li.appendChild(button);
       todoList.appendChild(li);
     }
-  }
+}
 
   function storeTodos() {
     // Stringify and set key in localStorage to todos array
     localStorage.setItem("todos", JSON.stringify(todos));
-  }
+}
   
-  // Add submit event to form
-  todoForm.addEventListener("submit", function(event) {
+// Add submit event to form
+todoForm.addEventListener("submit", function(event) {
     event.preventDefault();
   
     var todoText = todoInput.value.trim();
@@ -161,13 +159,9 @@ function renderTodos() {
     // Store updated todos in localStorage, re-render the list
     storeTodos();
     renderTodos();
-  });
-  
-  // Add click event to todoList element
+});
 
-  
-
-  function countdown() {
+function countdown() {
     // var timeLeft = 25;  
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
@@ -187,7 +181,7 @@ function renderTodos() {
         waitsec();
       }
     }, 1000);
-  }
+}
 
 //Functions
 function diplayQuestion() {    
@@ -252,8 +246,6 @@ function checkAnswer(answer){
 
 };
 
-//comment!
-
 function diplayScore() {
     codeQuiz.style.display = "none";
     nameEl.style.display = "inline-block";
@@ -288,14 +280,13 @@ function diplayScore() {
 
     
     
-}
+};
 
 function renderBoxes(){
     for(var i = 0; i <= lastQuestion; i++){
         answers.innerHTML += "<div class='answer' id="+ i +"></div>";
     }
 };
-
 
 //Events
 btn1.addEventListener("click",CodeQuiz);
