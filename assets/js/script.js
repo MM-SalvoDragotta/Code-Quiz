@@ -13,6 +13,14 @@ var timerEl = document.getElementById('time');
 
 var scoreEl = document.getElementById('score');
 
+var nameEl = document.getElementById('show-form');
+
+var todoInput = document.querySelector("#todo-text");
+var todoForm = document.querySelector("#todo-form");
+var todoList = document.querySelector("#todo-list");
+var todoCountSpan = document.querySelector("#todo-count");
+
+
 
 // quizQuestions
 var quizQuestions = [
@@ -66,8 +74,9 @@ var quizQuestions = [
 var currentQuestion = 0;;
 var lastQuestion = quizQuestions.length-1;
 // var timeLeft = quizQuestions.length * 10;
-var timeLeft = 15;
+var timeLeft = 2;
 var score = 0;
+var todos = [];
 
 
 // function countdown() {
@@ -106,6 +115,57 @@ async function waitsec() {
     diplayScore()
     // console.log('Two second later');
 }
+
+
+function renderTodos() {
+    // Clear todoList element and update todoCountSpan
+    todoList.innerHTML = "";
+    todoCountSpan.textContent = todos.length;
+  
+    // Render a new li for each todo
+    for (var i = 0; i < todos.length; i++) {
+      var todo = todos[i];
+  
+      var li = document.createElement("li");
+      li.textContent = todo;
+      li.setAttribute("data-index", i);
+  
+      var button = document.createElement("button");
+      button.textContent = "Added ✔️";
+  
+      li.appendChild(button);
+      todoList.appendChild(li);
+    }
+  }
+
+  function storeTodos() {
+    // Stringify and set key in localStorage to todos array
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+  
+  // Add submit event to form
+  todoForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+  
+    var todoText = todoInput.value.trim();
+  
+    // Return from function early if submitted todoText is blank
+    if (todoText === "") {
+      return;
+    }
+  
+    // Add new todoText to todos array, clear the input
+    todos.push(todoText);
+    todoInput.value = "";
+  
+    // Store updated todos in localStorage, re-render the list
+    storeTodos();
+    renderTodos();
+  });
+  
+  // Add click event to todoList element
+
+  
 
   function countdown() {
     // var timeLeft = 25;  
@@ -195,11 +255,38 @@ function checkAnswer(answer){
 //comment!
 
 function diplayScore() {
-    codeQuiz.style.display = "none"
-    scoreEl.style.display = "inline-block"
+    codeQuiz.style.display = "none";
+    nameEl.style.display = "inline-block";
+    scoreEl.style.display = "inline-block";
     var message = `Your score for the test is ${(score / quizQuestions.length) * 100}%`;
     console.log (message);
     scoreEl.innerHTML = `<p>${message}</p>`;
+    var storedTodos = JSON.parse(localStorage.getItem("todos"));
+    // If todos were retrieved from localStorage, update the todos array to it
+    if (storedTodos !== null) {
+      todos = storedTodos;
+    }
+  
+    // This is a helper function that will render todos to the DOM
+    renderTodos();
+
+    todoList.addEventListener("click", function(event) {
+        var element = event.target;
+      
+        // Checks if element is a button
+        if (element.matches("button") === true) {
+          // Get its data-index value and remove the todo element from the list
+          var index = element.parentElement.getAttribute("data-index");
+          todos.splice(index, 1);
+      
+          // Store updated todos in localStorage, re-render the list
+          storeTodos();
+          renderTodos();
+        }
+      });
+
+
+    
     
 }
 

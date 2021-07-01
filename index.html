@@ -39,7 +39,15 @@
                 <section id="time"></section>
                 <section id="answers"></section>  
             </section>  
-            <section id="score" class="hide display-score"></section>          
+            <section id="score" class="hide display-score"></section>
+            <section  id="show-form" >
+                <form id="todo-form" method="POST" class="hide">
+                    <label for="todo-text">Add your Name: </label>
+                    <input type="text" name="todo-text" id="todo-text" />
+                </form>
+                <p>Scores: <span id="todo-count">0</span></p>
+                <ul id="todo-list"></ul>
+            </section>
         </section>
 
         <footer>
